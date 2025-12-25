@@ -36,7 +36,7 @@
 <form>
 	<h1 class="text-2xl bold text-primary mb-4">Server Settings</h1>
 	<label class="block text-secondary text-sm font-bold mb-2" for="url"> Headscale URL </label>
-	<input bind:value={$URLStore} class="form-input" type="url" pattern={String.raw`https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)`} placeholder="https://hs.yourdomain.com.au" />
+	<input bind:value={$URLStore} class="form-input" type="url" pattern={String.raw`https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}(\.[-a-zA-Z0-9()]{1,6})?\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)`} placeholder="https://hs.yourdomain.com.au" />
 	<p class="text-xs text-base-content text-italics mb-8">URL for your headscale server instance</p>
 	<label class="block text-secondary text-sm font-bold mb-2" for="password">
 		Headscale API Key
