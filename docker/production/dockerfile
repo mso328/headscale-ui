@@ -8,7 +8,7 @@ ARG CHECKOUT_BRANCH="master"
 #environment variables
 ENV PROJECT_NAME="headscale-ui"
 # URL for the github/git location
-ENV PROJECT_URL="https://github.com/gurucomputing/headscale-ui"
+ENV PROJECT_URL="https://github.com/mso328/headscale-ui"
 
 # Set the staging environment
 WORKDIR /staging/scripts
