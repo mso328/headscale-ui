@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Ejemplo: Tu servidor Headscale
+  # headscale:
+  #   image: headscale/headscale:latest
+  #   container_name: headscale
+  #   volumes:
+  #     - ./config:/etc/headscale
+  #     - ./data:/var/lib/headscale
+  #   ports:
+  #     - "8080:8080"
+  #   networks:
+  #     - headscale-net
+
+  # Headscale UI con backend proxy
+  headscale-ui:
+    build:
+      context: .
+      dockerfile: docker/production/dockerfile.node
+    container_name: headscale-ui
+    ports:
+      - "3000:3000"
+    networks:
+      - headscale-net
+    depends_on:
+      - headscale
+    restart: unless-stopped
+    # Nota: No necesitas variables de entorno
+    # La configuración se hace desde la UI web en Settings
+    # Usa la URL interna: http://headscale:8080
+
+  # Opcional: Reverse proxy con Caddy
+  # caddy:
+  #   image: caddy:alpine
+  #   container_name: caddy
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  #     - caddy_data:/data
+  #     - caddy_config:/config
+  #   networks:
+  #     - headscale-net
+  #   restart: unless-stopped
+
+networks:
+  headscale-net:
+    driver: bridge
+
+# volumes:
+#   caddy_data:
+#   caddy_config:

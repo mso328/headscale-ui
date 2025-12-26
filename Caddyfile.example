@@ -1,0 +1,12 @@
+# Ejemplo de Caddyfile para usar como reverse proxy (opcional)
+# Si quieres HTTPS automático con Let's Encrypt
+
+# Reemplaza tu-dominio.com con tu dominio real
+# tu-dominio.com {
+#     reverse_proxy headscale-ui:3000
+# }
+
+# Para desarrollo local sin SSL:
+:80 {
+    reverse_proxy headscale-ui:3000
+}
