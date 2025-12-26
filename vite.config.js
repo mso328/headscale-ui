@@ -1,10 +1,13 @@
 // vite.config.js
 import { sveltekit } from '@sveltejs/kit/vite';
-
+import basicSsl from '@vitejs/plugin-basic-ssl';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-        plugins: [sveltekit()],
+        plugins: [sveltekit(), basicSsl()],
+        preview: {
+                https: true
+        }
 };
 
 export default config;
