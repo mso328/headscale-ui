@@ -3,6 +3,7 @@
 	import { fade } from 'svelte/transition';
 	import { writable } from 'svelte/store';
 	import { base } from '$app/paths';
+	import { goto } from '$app/navigation';
 	import { showACLPagesStore } from './stores';
 
 	// navigation bar variables
@@ -27,6 +28,16 @@
 		}
 		componentLoaded = true;
 	});
+
+	async function handleLogout() {
+		try {
+			await fetch(`${base}/api/auth/logout`, { method: 'POST' });
+			goto(`${base}/login`);
+		} catch (error) {
+			console.error('Logout error:', error);
+			goto(`${base}/login`);
+		}
+	}
 </script>
 
 <!-- let the page initialize before showing the nav bar -->
@@ -76,6 +87,16 @@
 				</svg>
 				<span class="indent-4">Settings</span>
 			</a>
+		</div>
+
+		<!-- Logout button at the bottom -->
+		<div class="absolute bottom-0 w-full">
+			<button class="nav-item text-error stroke-error" on:click={handleLogout}>
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+				</svg>
+				<span class="indent-4">Logout</span>
+			</button>
 		</div>
 	</nav>
 {/if}
