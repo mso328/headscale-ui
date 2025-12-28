@@ -7,6 +7,7 @@
 
 :{$HTTP_PORT} {
 	handle / {
+		rewrite * /web{uri}
 		redir /web permanent
 	}
 	reverse_proxy localhost:3000
@@ -17,6 +18,7 @@
 		on_demand
 	}
 	handle / {
+		rewrite * /web{uri}
 		redir /web permanent
 	}
 	reverse_proxy localhost:3000
