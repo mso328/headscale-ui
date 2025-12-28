@@ -6,20 +6,18 @@
 }
 
 :{$HTTP_PORT} {
-	redir / /web
-	uri strip_prefix /web
-	file_server {
-		root /web
+	handle / {
+		redir /web permanent
 	}
+	reverse_proxy localhost:3000
 }
 
 :{$HTTPS_PORT} {
-	redir / /web
-	uri strip_prefix /web
 	tls internal {
 		on_demand
 	}
-	file_server {
-		root /web
+	handle / {
+		redir /web permanent
 	}
+	reverse_proxy localhost:3000
 }

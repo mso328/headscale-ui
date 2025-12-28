@@ -30,18 +30,18 @@ RUN /staging/scripts/1-image-build.sh
 ## Second Image
 #####
 
-FROM alpine:latest
+FROM node:20-alpine
 
 #environment variables
 ENV PROJECT_NAME="headscale-ui"
 # URL for the github/git location
-ENV PROJECT_URL="https://github.com/gurucomputing/headscale-ui"
+ENV PROJECT_URL="https://github.com/mso328/headscale-ui"
 # Ports that caddy will run on
 ENV HTTP_PORT="8080"
 ENV HTTPS_PORT="8443"
 
 # Production Web Server port. Runs a self signed SSL certificate
-EXPOSE 443
+EXPOSE 8080
 
 # Set the staging environment
 WORKDIR /data
@@ -54,8 +54,13 @@ COPY scripts/* ./scripts/
 # Copy default caddy config from project root
 COPY ./Caddyfile /staging/Caddyfile
 COPY --from=build /staging/${PROJECT_NAME}/build /web
+COPY --from=build /staging/${PROJECT_NAME}/package.json /web/package.json
+COPY --from=build /staging/${PROJECT_NAME}/package-lock.json /web/package-lock.json
 
 RUN apk add --no-cache caddy
+
+# Install production dependencies
+RUN cd /web && npm ci --omit=dev
 
 # Create a group and user
 RUN addgroup -S appgroup && adduser -D appuser -G appgroup

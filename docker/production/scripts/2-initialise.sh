@@ -12,5 +12,9 @@ then
   cp /staging/Caddyfile /data/Caddyfile
 fi
 
+echo "Starting Node.js server"
+cd /web
+node index.js &
+
 echo "Starting Caddy"
 /usr/sbin/caddy run --adapter caddyfile --config /data/Caddyfile
